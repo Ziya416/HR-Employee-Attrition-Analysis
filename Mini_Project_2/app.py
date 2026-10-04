@@ -5,6 +5,7 @@ import streamlit as st
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from pathlib import Path
 
 st.markdown(
     """
@@ -22,8 +23,11 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+data_path = Path(__file__).parent / "HR_Employee_Attrition_Analysis.csv"
+if not data_path.exists():
+    data_path = Path(__file__).parent.parent / "HR_Employee_Attrition_Analysis.csv"
 
-df = pd.read_csv("HR_Employee_Attrition_Analysis.csv")
+df = pd.read_csv(data_path)
 
 model_df = df.copy()
 for col in model_df.select_dtypes(include="object").columns:
